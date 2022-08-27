@@ -70,5 +70,5 @@ test_cases = [
 
 
 @pytest.mark.parametrize("cmd_output,expected", test_cases)
-def test_pdf_info(cmd_output: bytes, expected: PDFInfo):
+def test_pdf_info(cmd_output: bytes, expected: PDFInfo) -> None:
     assert expected == PDFInfo.from_cmd_output(cmd_output=cmd_output)

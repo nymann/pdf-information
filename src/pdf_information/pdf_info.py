@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from pathlib import Path
 import subprocess  # noqa: S404
@@ -33,13 +35,13 @@ class PDFInfo:
     file_size: Optional[str] = None
 
     @classmethod
-    def from_cmd_output(cls, cmd_output: bytes):
+    def from_cmd_output(cls, cmd_output: bytes) -> PDFInfo:
         cls_dict: dict[str, Any] = {}
         for key, val in map(convert_line_to_key_val, cmd_output.splitlines()):
             cls_dict[key] = val
         return cls(**cls_dict)
 
     @classmethod
-    def from_cmd(cls, pdf_file: Path):
+    def from_cmd(cls, pdf_file: Path) -> PDFInfo:
         cmd_output: bytes = subprocess.check_output(["pdfinfo", pdf_file])  # noqa: S603,S607 TODO
         return cls.from_cmd_output(cmd_output=cmd_output)
